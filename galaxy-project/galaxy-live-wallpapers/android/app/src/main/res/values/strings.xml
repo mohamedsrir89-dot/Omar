@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Galaxy S26 Live Wallpaper</string>
+    <string name="title_activity_main">Galaxy S26 Live Wallpaper</string>
+    <string name="package_name">com.cosmicodyssey.galaxywallpaper</string>
+    <string name="custom_url_scheme">com.cosmicodyssey.galaxywallpaper</string>
+</resources>
