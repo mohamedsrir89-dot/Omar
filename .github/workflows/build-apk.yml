@@ -1,5 +1,4 @@
 
-          
 name: Build Galaxy APK
 
 on:
@@ -58,4 +57,3 @@ jobs:
           name: Galaxy-S26-APK
           path: galaxy-project/galaxy-live-wallpapers/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-
