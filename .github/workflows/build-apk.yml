@@ -1,5 +1,3 @@
-
-
 name: Build Galaxy APK
 
 on:
@@ -11,46 +9,48 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: galaxy-project/galaxy-live-wallpapers
+
     steps:
-      - name: Download project
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: galaxy-project/galaxy-live-wallpapers/package-lock.json
 
       - name: Install dependencies
+        working-directory: galaxy-project/galaxy-live-wallpapers
         run: npm ci --legacy-peer-deps
 
-      - name: Build app
+      - name: Build web app
+        working-directory: galaxy-project/galaxy-live-wallpapers
         run: npm run build
 
-      - name: Prepare Android
-        run: npx cap sync android
-
-      - name: Install Java
-        uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
 
-      - name: Set up Android
+      - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Sync Capacitor
+        working-directory: galaxy-project/galaxy-live-wallpapers
+        run: npx cap sync android
+
       - name: Build APK
+        working-directory: galaxy-project/galaxy-live-wallpapers
         run: |
           chmod +x android/gradlew
           cd android
           ./gradlew assembleDebug
 
-      - name: Save APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Galaxy-S26-APK
           path: galaxy-project/galaxy-live-wallpapers/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          
