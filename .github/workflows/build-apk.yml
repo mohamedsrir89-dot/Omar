@@ -1,3 +1,5 @@
+
+          
 name: Build Galaxy APK
 
 on:
@@ -33,15 +35,11 @@ jobs:
           distribution: temurin
           java-version: 21
 
-
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          packages: ''
 
       - name: Accept Android SDK licenses
-        run: yes | "$ANDROID_HOME/.  cmdline-tools/latest/bin/sdkmanager" --licenses
-
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses
 
       - name: Sync Capacitor
         working-directory: galaxy-project/galaxy-live-wallpapers
@@ -60,4 +58,4 @@ jobs:
           name: Galaxy-S26-APK
           path: galaxy-project/galaxy-live-wallpapers/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-          
+
